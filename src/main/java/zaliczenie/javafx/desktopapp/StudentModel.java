@@ -4,7 +4,7 @@ public class StudentModel {
     private String name;
     private String surname;
     private double averageGrade;
-    private int pesel;
+    private int studentNumber;
 
     public StudentModel(){};
 
@@ -21,7 +21,7 @@ public class StudentModel {
     }
 
     public int getPesel() {
-        return pesel;
+        return studentNumber;
     }
 
     public void setName(String name) {
@@ -36,7 +36,7 @@ public class StudentModel {
         this.averageGrade = averageGrade;
     }
 
-    public void setPesel(int pesel) {
-        this.pesel = pesel;
+    public void setPesel(int studentNumber) {
+        this.studentNumber = studentNumber;
     }
 }
