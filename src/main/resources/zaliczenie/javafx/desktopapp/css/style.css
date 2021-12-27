@@ -1,7 +1,33 @@
 .button {
-    -fx-background-color: blue;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-padding: 5 25 5 25;
+    -fx-border-color: #1E90FF;
+    -fx-background-color: white;
 }
 
 .button:hover {
-    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-background-color: #1E90FF;
+}
+
+.list-view {
+    -fx-border-color: #1E90FF;
+}
+
+.label {
+    -fx-font-size: 14px;
+}
+
+.main-label {
+    -fx-font-size: 22px;
+}
+
+.response-label {
+    -fx-font-size: 18px;
+    -fx-text-fill: red;
+}
+
+.text-field {
+    -fx-border-color: #1E90FF;
 }
