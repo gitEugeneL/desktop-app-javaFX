@@ -1,12 +1,14 @@
-package zaliczenie.javafx.desktopapp;
+package zaliczenie.javafx.desktopapp.models;
 
-public class StudentModel {
+import java.io.Serializable;
+
+public class Student implements Serializable {
     private String name;
     private String surname;
-    private double averageGrade;
-    private int studentNumber;
+    private String averageGrade; // edit!!!!!!!!
+    private String studentNumber; // edit!!!!!!!
 
-    public StudentModel(){};
+    public Student(){};
 
     public String getName() {
         return name;
@@ -16,11 +18,11 @@ public class StudentModel {
         return surname;
     }
 
-    public double getAverageGrade() {
+    public String getAverageGrade() {
         return averageGrade;
     }
 
-    public int getPesel() {
+    public String getStudentNumber() {
         return studentNumber;
     }
 
@@ -32,11 +34,11 @@ public class StudentModel {
         this.surname = surname;
     }
 
-    public void setAverageGrade(double averageGrade) {
+    public void setAverageGrade(String averageGrade) {
         this.averageGrade = averageGrade;
     }
 
-    public void setPesel(int studentNumber) {
+    public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
     }
 }

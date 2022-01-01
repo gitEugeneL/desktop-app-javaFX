@@ -4,6 +4,9 @@
 # Target folder
 target
 
+# .dat file
+*.dat
+
 # Compiled class file
 *.class
 

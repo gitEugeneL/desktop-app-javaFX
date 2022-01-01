@@ -5,4 +5,6 @@ module zaliczenie.javafx.desktopapp {
 
     opens zaliczenie.javafx.desktopapp to javafx.fxml;
     exports zaliczenie.javafx.desktopapp;
+    exports zaliczenie.javafx.desktopapp.models;
+    opens zaliczenie.javafx.desktopapp.models to javafx.fxml;
 }
