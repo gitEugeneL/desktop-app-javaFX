@@ -6,7 +6,7 @@
 
 
 <VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="zaliczenie.javafx.desktopapp.PrimaryController" >
+      fx:controller="zaliczenie.javafx.desktopapp.controllers.StudentController" >
 
 
     <Label styleClass="main-label" text="Podstawy programowania">
@@ -18,48 +18,48 @@
 
     <HBox alignment="CENTER" spacing="30.0">
         <VBox spacing="20.0">
-            <ListView fx:id="list" prefHeight="313.0" prefWidth="310.0" onMouseClicked="#editForm">
+            <ListView fx:id="listView" prefHeight="313.0" prefWidth="310.0" onMouseClicked="#editForm">
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>
             </ListView>
 
             <HBox alignment="CENTER" spacing="20.0">
-                <Button text="Zapisz do pliku" onAction="#saveFile" />
-                <Button text="Wczytaj z pliku" onAction="#clickReadButton" />
+                <Button text="Zapisz do pliku" onAction="#saveFiles" />
+                <Button text="Wczytaj z pliku" onAction="#readFiles" />
             </HBox>
         </VBox>
 
         <VBox>
             <Label>Imię:</Label>
-            <TextField fx:id="name" prefHeight="35.0" prefWidth="310.0" promptText="wpisz imię">
+            <TextField fx:id="nameField" prefHeight="35.0" prefWidth="310.0" promptText="wpisz imię">
                 <VBox.margin>
                     <Insets bottom="20.0" top="8.0" />
                 </VBox.margin>
             </TextField>
 
             <Label>Nazwisko:</Label>
-            <TextField fx:id="surname" prefHeight="35.0" prefWidth="310.0" promptText="wpisz nazwisko">
+            <TextField fx:id="surnameField" prefHeight="35.0" prefWidth="310.0" promptText="wpisz nazwisko">
                 <VBox.margin>
                     <Insets bottom="20.0" top="8.0" />
                 </VBox.margin>
             </TextField>
 
             <Label>Nr albumu:</Label>
-            <TextField fx:id="studentNumber" prefHeight="35.0" prefWidth="310.0" promptText="wpisz nr. albumu">
+            <TextField fx:id="studentNumberField" prefHeight="35.0" prefWidth="310.0" promptText="wpisz nr. albumu">
                 <VBox.margin>
                     <Insets bottom="20.0" top="8.0" />
                 </VBox.margin>
             </TextField>
 
             <Label>Średnia ocena:</Label>
-            <TextField fx:id="averageGrade" prefHeight="35.0" prefWidth="310.0" promptText="wpisz średnią ocenę">
+            <TextField fx:id="averageGradeField" prefHeight="35.0" prefWidth="310.0" promptText="wpisz średnią ocenę">
                 <VBox.margin>
                     <Insets bottom="31.0" top="8.0" />
                 </VBox.margin>
             </TextField>
 
-            <HBox fx:id="buttonGroup" alignment="CENTER" spacing="20.0">
+            <HBox fx:id="buttonGroupField" alignment="CENTER" spacing="20.0">
                 <!-- Box for dynamic buttons -->
             </HBox>
         </VBox>

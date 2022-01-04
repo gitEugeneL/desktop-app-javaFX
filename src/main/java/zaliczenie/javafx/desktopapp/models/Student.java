@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Student implements Serializable {
     private String name;
     private String surname;
-    private String averageGrade; // edit!!!!!!!!
-    private String studentNumber; // edit!!!!!!!
+    private double averageGrade;
+    private String studentNumber;
 
     public Student(){};
 
@@ -19,7 +19,7 @@ public class Student implements Serializable {
     }
 
     public String getAverageGrade() {
-        return averageGrade;
+        return Double.toString(this.averageGrade);
     }
 
     public String getStudentNumber() {
@@ -35,7 +35,7 @@ public class Student implements Serializable {
     }
 
     public void setAverageGrade(String averageGrade) {
-        this.averageGrade = averageGrade;
+        this.averageGrade = Double.parseDouble(averageGrade);
     }
 
     public void setStudentNumber(String studentNumber) {
