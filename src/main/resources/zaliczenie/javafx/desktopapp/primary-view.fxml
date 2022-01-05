@@ -65,7 +65,7 @@
         </VBox>
     </HBox>
 
-    <Label fx:id="response" styleClass="response-label">
+    <Label fx:id="responseLabel" styleClass="response-label">
         <VBox.margin>
             <Insets top="40.0" />
         </VBox.margin>

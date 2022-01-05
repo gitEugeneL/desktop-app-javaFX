@@ -7,7 +7,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import zaliczenie.javafx.desktopapp.DataValidation;
 import zaliczenie.javafx.desktopapp.models.Student;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,7 +25,7 @@ public class StudentController {
     @FXML
     private HBox buttonGroupField;
     @FXML
-    private Label response;
+    private Label responseLabel;
 
 
     private final String ADD_BUTTON = "Dodaj nowy obiekt";
@@ -36,7 +35,6 @@ public class StudentController {
 
     private ArrayList<Student> studentsList = new ArrayList<>();
     private int indexEditingElement;
-
 
     @FXML
     private void initialize() {
@@ -61,9 +59,8 @@ public class StudentController {
             this.clearInputFields();
             studentsList.add(student);
             this.updateListViewState();
-            response.setText("");
         } else {
-            response.setText("Błąd dodawania");
+            responseLabel.setText("Błąd dodawania");
         }
     }
 
@@ -74,9 +71,8 @@ public class StudentController {
             this.studentsList.set(indexEditingElement, student);
             this.updateListViewState();
             this.exitEditing(event);
-            response.setText("");
         } else {
-            response.setText("Błąd edytowania");
+            responseLabel.setText("Błąd edytowania");
         }
     }
 
@@ -160,7 +156,7 @@ public class StudentController {
 
         // Remove red border and error label if there were validation errors on another element of the list
         deleteBorderColor();
-        this.response.setText("");
+        this.responseLabel.setText("");
 
         this.deleteViewButtons();
         this.createViewButton(EDIT_BUTTON);
@@ -169,6 +165,7 @@ public class StudentController {
     }
 
     private void clearInputFields() {
+        this.responseLabel.setText("");
         this.nameField.setText("");
         this.surnameField.setText("");
         this.studentNumberField.setText("");
@@ -181,21 +178,10 @@ public class StudentController {
 
         // Remove red border and error label if there were validation errors
         deleteBorderColor();
-        this.response.setText("");
 
         this.clearInputFields();
         this.deleteViewButtons();
         this.createViewButton(ADD_BUTTON);
-    }
-
-    @FXML
-    private void readFiles(ActionEvent event) {
-        this.readFiles();
-    }
-
-    @FXML
-    private void saveFiles(ActionEvent event) {
-        this.saveFile();
     }
 
     private void createViewButton(String buttonName) {
@@ -225,39 +211,25 @@ public class StudentController {
         this.buttonGroupField.getChildren().clear();
     }
 
-
-    //--------------------- refactor-----------------------------------------------
-
+    @FXML
     private void readFiles() {
-        try {
-            ArrayList<Student> newStudentsList;
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("students.dat"));
-            newStudentsList = (ArrayList<Student>) ois.readObject();
-            ois.close();
-
+        ArrayList<Student> newStudentsList = Student.readFile();
+        if (newStudentsList != null) {
             this.studentsList.clear();
             this.studentsList.addAll(newStudentsList);
             this.updateListViewState();
-
-        } catch (FileNotFoundException fileNotFoundException) {
-//            fileNotFoundException.printStackTrace();
-            System.out.println("ERRRRRROOOOOOOOORRRRRRRR");
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            this.responseLabel.setText("Dane załadowane");
+        } else {
+            this.responseLabel.setText("Błąd odczytu danych");
         }
     }
 
-    private void saveFile() {
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("students.dat"));
-            oos.writeObject(this.studentsList);
-            oos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    @FXML
+    private void saveFiles() {
+        if (Student.saveFile(this.studentsList)) {
+            this.responseLabel.setText("Dane zapisane");
+        } else {
+            this.responseLabel.setText("Błąd zapisu danych");
         }
     }
 }

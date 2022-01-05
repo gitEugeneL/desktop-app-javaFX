@@ -1,12 +1,13 @@
 package zaliczenie.javafx.desktopapp.models;
 
-import java.io.Serializable;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Student implements Serializable {
     private String name;
     private String surname;
-    private double averageGrade;
     private String studentNumber;
+    private double averageGrade;
 
     public Student(){};
 
@@ -40,5 +41,30 @@ public class Student implements Serializable {
 
     public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
+    }
+
+    public static boolean saveFile(ArrayList<Student> studentsList) {
+        boolean saved = false;
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("students.dat"));
+            oos.writeObject(studentsList);
+            oos.close();
+            saved = true;
+        } catch (IOException e) {
+            System.out.println("save file error");
+        }
+        return saved;
+    }
+
+    public static ArrayList<Student> readFile() {
+        ArrayList<Student> newStudentsList = null;
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("students.dat"));
+            newStudentsList = (ArrayList<Student>) ois.readObject();
+            ois.close();
+        } catch (IOException | ClassNotFoundException fileNotFoundException) {
+            System.out.println("read file error");
+        }
+        return newStudentsList;
     }
 }
