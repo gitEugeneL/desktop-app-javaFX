@@ -18,8 +18,8 @@ public class Student implements Serializable {
         return surname;
     }
 
-    public String getAverageGrade() {
-        return Double.toString(this.averageGrade);
+    public double getAverageGrade() {
+        return averageGrade;
     }
 
     public String getStudentNumber() {
@@ -34,8 +34,8 @@ public class Student implements Serializable {
         this.surname = surname;
     }
 
-    public void setAverageGrade(String averageGrade) {
-        this.averageGrade = Double.parseDouble(averageGrade);
+    public void setAverageGrade(double averageGrade) {
+        this.averageGrade = averageGrade;
     }
 
     public void setStudentNumber(String studentNumber) {

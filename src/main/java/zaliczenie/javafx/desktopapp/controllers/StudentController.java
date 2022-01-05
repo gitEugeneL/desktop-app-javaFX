@@ -9,6 +9,7 @@ import zaliczenie.javafx.desktopapp.DataValidation;
 import zaliczenie.javafx.desktopapp.models.Student;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class StudentController {
@@ -24,6 +25,9 @@ public class StudentController {
     private TextField averageGradeField;
     @FXML
     private HBox buttonGroupField;
+    @FXML
+    private Label response;
+
 
     private final String ADD_BUTTON = "Dodaj nowy obiekt";
     private final String EDIT_BUTTON = "Zapisz";
@@ -57,6 +61,9 @@ public class StudentController {
             this.clearInputFields();
             studentsList.add(student);
             this.updateListViewState();
+            response.setText("");
+        } else {
+            response.setText("Błąd dodawania");
         }
     }
 
@@ -67,6 +74,9 @@ public class StudentController {
             this.studentsList.set(indexEditingElement, student);
             this.updateListViewState();
             this.exitEditing(event);
+            response.setText("");
+        } else {
+            response.setText("Błąd edytowania");
         }
     }
 
@@ -78,29 +88,47 @@ public class StudentController {
     }
 
     private Student createStudent() {
-        if (checkInputData()) {
-            Student student = new Student();
-            student.setName(this.nameField.getText().trim());
-            student.setSurname(this.surnameField.getText().trim());
-            student.setStudentNumber(this.studentNumberField.getText().trim());
-            student.setAverageGrade(this.averageGradeField.getText().trim());
-            return student;
+        HashMap<String, String> fields = getValidData();
+        try {
+            if (fields != null) {
+                Student student = new Student();
+                student.setName(fields.get("name"));
+                student.setSurname(fields.get("surname"));
+                student.setStudentNumber(fields.get("studentNumber"));
+                student.setAverageGrade(Double.parseDouble(fields.get("averageGrade")));
+                return student;
+            }
+            return null;
+        } catch (NumberFormatException e) {
+            return null;
         }
-        return null;
     }
 
-    private boolean checkInputData() {
-        boolean nameValid = DataValidation.isName(this.nameField.getText());
-        boolean surnameValid = DataValidation.isSurname(this.surnameField.getText());
-        boolean studentNumberValid = DataValidation.isStudentNumber(this.studentNumberField.getText());
-        boolean averageGradeValid = DataValidation.isAverageGrade(this.averageGradeField.getText());
+    private HashMap<String, String> getValidData() {
+        String name = this.nameField.getText().trim();
+        String surname = this.surnameField.getText().trim();
+        String studentNumber = this.studentNumberField.getText().trim();
+        String averageGrade = this.averageGradeField.getText().trim();
+
+        boolean nameValid = DataValidation.isName(name);
+        boolean surnameValid = DataValidation.isSurname(surname);
+        boolean studentNumberValid = DataValidation.isStudentNumber(studentNumber);
+        boolean averageGradeValid = DataValidation.isAverageGrade(averageGrade);
 
         changeBorderColor(this.nameField, nameValid);
         changeBorderColor(this.surnameField, surnameValid);
         changeBorderColor(this.studentNumberField, studentNumberValid);
         changeBorderColor(this.averageGradeField, averageGradeValid);
 
-        return nameValid && surnameValid && studentNumberValid && averageGradeValid;
+        if (nameValid && surnameValid && studentNumberValid && averageGradeValid) {
+            HashMap<String, String> fields = new HashMap<>();
+            fields.put("name", name);
+            fields.put("surname", surname);
+            fields.put("studentNumber", studentNumber);
+            fields.put("averageGrade", averageGrade);
+            return fields;
+        }
+        return null;
     }
 
     private void changeBorderColor(TextField textField, boolean valid) {
@@ -111,20 +139,28 @@ public class StudentController {
         }
     }
 
+    private void deleteBorderColor() {
+        String style = "-fx-border-color: #1E90FF";
+        this.surnameField.setStyle(style);
+        this.nameField.setStyle(style);
+        this.studentNumberField.setStyle(style);
+        this.averageGradeField.setStyle(style);
+    }
+
     @FXML
     private void editForm(MouseEvent event) {
         int index = listView.getSelectionModel().getSelectedIndex();
         if (index == -1) return;
+        this.indexEditingElement = index;
 
         this.nameField.setText(this.studentsList.get(index).getName());
         this.surnameField.setText(this.studentsList.get(index).getSurname());
         this.studentNumberField.setText(this.studentsList.get(index).getStudentNumber());
-        this.averageGradeField.setText(this.studentsList.get(index).getAverageGrade());
+        this.averageGradeField.setText(Double.toString(this.studentsList.get(index).getAverageGrade()));
 
-        // [!] remove red border if there were validation errors on another element of the list
-        checkInputData();
-
-        this.indexEditingElement = index;
+        // Remove red border and error label if there were validation errors on another element of the list
+        deleteBorderColor();
+        this.response.setText("");
 
         this.deleteViewButtons();
         this.createViewButton(EDIT_BUTTON);
@@ -142,8 +178,12 @@ public class StudentController {
     @FXML
     private void exitEditing(ActionEvent event) {
         listView.getSelectionModel().clearSelection(indexEditingElement);
-        this.clearInputFields();
 
+        // Remove red border and error label if there were validation errors
+        deleteBorderColor();
+        this.response.setText("");
+
+        this.clearInputFields();
         this.deleteViewButtons();
         this.createViewButton(ADD_BUTTON);
     }

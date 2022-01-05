@@ -5,8 +5,7 @@ import java.util.regex.Pattern;
 
 public class DataValidation {
 
-    public static boolean isName(String text) {
-        String str = text.trim();
+    public static boolean isName(String str) {
         int strLength = str.length();
         Pattern pattern = Pattern.compile("^[A-Za-z]+$");
         Matcher matcher = pattern.matcher(str);
@@ -14,8 +13,7 @@ public class DataValidation {
         return strLength > 3 && strLength < 10 && matcher.matches();
     }
 
-    public static boolean isSurname(String text) {
-        String str = text.trim();
+    public static boolean isSurname(String str) {
         int strLength = str.length();
         Pattern pattern = Pattern.compile("^[A-Za-z]+$");
         Matcher matcher = pattern.matcher(str);
@@ -23,8 +21,7 @@ public class DataValidation {
         return strLength > 3 && strLength < 20 && matcher.matches();
     }
 
-    public static boolean isStudentNumber(String text) {
-        String str = text.trim();
+    public static boolean isStudentNumber(String str) {
         int strLength = str.length();
         Pattern pattern = Pattern.compile("^[A-Za-z0-9]+$");
         Matcher matcher = pattern.matcher(str);
@@ -33,8 +30,7 @@ public class DataValidation {
 
     }
 
-    public static boolean isAverageGrade(String text) {
-       String str = text.trim();
+    public static boolean isAverageGrade(String str) {
        try {
            double grade = Double.parseDouble(str);
            return grade > 0 && grade <= 6;
