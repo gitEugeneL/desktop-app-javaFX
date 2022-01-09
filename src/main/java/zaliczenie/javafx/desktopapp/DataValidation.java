@@ -23,10 +23,10 @@ public class DataValidation {
 
     public static boolean isStudentNumber(String str) {
         int strLength = str.length();
-        Pattern pattern = Pattern.compile("^[A-Za-z0-9]+$");
+        Pattern pattern = Pattern.compile("^[0-9]+$");
         Matcher matcher = pattern.matcher(str);
 
-        return strLength > 4 && strLength < 10 && matcher.matches();
+        return strLength == 5 && matcher.matches();
 
     }
 
